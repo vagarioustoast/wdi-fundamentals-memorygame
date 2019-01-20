@@ -1,3 +1,5 @@
+"use strict";
+
 console.log("Up and running.");
 
 let cards = [
@@ -34,13 +36,24 @@ let checkForMatch = () => {
   }
 };
 
-let flipCard = cardId => {
+let flipCard = () => {
+  let cardId = this.getAttribute("data-id");
   cardsInPlay.push(cards[cardId].rank);
   console.log(`User flipped ${cards[cardId].rank}.`);
+  this.setAttribute("src", cards[cardId].cardImage);
   checkForMatch();
   console.log(cards[cardId].cardImage);
   console.log(cards[cardId].suit);
 };
 
-flipCard(0);
-flipCard(1);
+let createBoard = () => {
+  for (let i = 0; i < cards.length; i++) {
+    let cardElement = document.createElement("img");
+    cardElement.setAttribute("src", "images/back.png");
+    cardElement.setAttribute("data-id", cards[i]);
+    cardElement.addEventListener("click", flipCard);
+    document.getElementById("game-board").appendChild(cardElement);
+  }
+};
+
+createBoard();
